@@ -1,6 +1,61 @@
 
 
-_M.textadept = require 'textadept'
+local TA = require 'textadept'
 
 
--- custom
+EXCLUDE_FILTERS = {
+  '^~%.', '!%.h$', '!%.cpp$', '!%.c$', '!%.remedy$', '!%.lua$',
+
+  folders = { '%.hg', '%.svn', '%.git' }
+}
+--DEFAULT_DEPTH=4
+--MAX=1000
+
+SUFFIX_PAIRS = {
+  ['.cc'] = '.h';
+  ['.cpp'] = '.h';
+  ['.h'] = '.cc';
+
+}
+
+local colours = {
+    red = "#FF0000", blue = '#0000FF', green = '#00FF00',
+    pink ="#FFAAAA" , black = '#000000', lightblue = '#AAAAFF', lightgreen = '#AAFFAA'
+  }
+
+function colour_parse(str)
+  if str:sub(1,1) ~= '#' then
+    str = colours[str]
+  end
+  return tonumber(str:sub(6,7)..std:sub(4,5)..str:sub(2,4),16)
+end
+
+
+
+function TA.bookmarks.init_bookmark()
+  buffer:marker_define(TA.bookmarks.MARK_BOOKMARK, _SCINTILLA.constants.SC_MARK_ROUNDRECT)
+  --buffer:marker_set_fore(_M.textadept.bookmarks.MARK_BOOKMARK, colour_parse(blue))
+
+  buffer.margin_width_n[1] = 16
+end
+
+
+
+function string:endswith(endding)
+   return endding == '' or self:sub(-endding:len()) == endding
+end
+
+
+local COM = require 'common'
+
+
+
+COM.project.DIRS = {
+    _HOME, '/opt/projects', '/opt/textadept_6.2.x86_64'
+  }
+
+
+require 'textadept.complete'
+
+  
+  
