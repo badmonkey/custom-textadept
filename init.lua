@@ -31,23 +31,14 @@ function colour_parse(str)
 end
 
 
-
-function TA.bookmarks.init_bookmark()
-  buffer:marker_define(TA.bookmarks.MARK_BOOKMARK, _SCINTILLA.constants.SC_MARK_ROUNDRECT)
-  --buffer:marker_set_fore(_M.textadept.bookmarks.MARK_BOOKMARK, colour_parse(blue))
-
-  buffer.margin_width_n[1] = 16
-end
-
-
-
 function string:endswith(endding)
    return endding == '' or self:sub(-endding:len()) == endding
 end
 
 
-local COM = require 'common'
 
+
+local COM = require 'common'
 
 
 COM.project.DIRS = {

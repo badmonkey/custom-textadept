@@ -1,14 +1,17 @@
--- Some additional theming, independent of the selected theme.
-module('_m.common.theming', package.seeall)
+
+local M = {}
+
 
 -- See also the themes'
 -- [buffer.lua](http://code.google.com/p/textadept/source/browse/themes/light/buffer.lua)
 -- and
 -- [view.lua](http://code.google.com/p/textadept/source/browse/themes/light/view.lua)
 -- for more options.
-function set_buffer_properties()
+
+function buffer_theming()
   local buffer = buffer
   local c = _SCINTILLA.constants
+  local TA = _M.textadept
 
 --[=[
   buffer.view_ws = 0
@@ -20,33 +23,41 @@ function set_buffer_properties()
   buffer.additional_selection_typing = true
   buffer.additional_carets_visible = true
 ]=]
-
+  
+  --buffer.zoom = 2 -- e.g. add 2 points to the font size
+  
   -- Set number margin for files with more than 999 lines
   local width = #(buffer.line_count..'')
   width = width > 3 and width or 3
   buffer.margin_width_n[0] = 4 + width * buffer:text_width(c.STYLE_LINENUMBER, '9')
 end
 
+
+function bookmark_theming()
+  --buffer:marker_define(TA.bookmarks.MARK_BOOKMARK, _SCINTILLA.constants.SC_MARK_ROUNDRECT)
+  --buffer:marker_set_fore(_M.textadept.bookmarks.MARK_BOOKMARK, colour_parse(blue))
+  --buffer.margin_width_n[1] = 16
+end
+
+
+
 -- Connect events.
-events.connect('file_opened', set_buffer_properties)
-events.connect('buffer_new', set_buffer_properties)
-events.connect('view_new', set_buffer_properties)
-events.connect('reset_after', function ()
+--events.connect('file_opened', set_buffer_properties)
+--events.connect('buffer_new', set_buffer_properties)
+--events.connect('view_new', set_buffer_properties)
+
+events.connect(events.BUFFER_AFTER_SWITCH, buffer_theming)
+events.connect(events.VIEW_AFTER_SWITCH, buffer_theming)
+
+events.connect(events.RESET_AFTER, function()
   for i=1, #_VIEWS do
     gui.goto_view(1, false)
     view:focus()
-    set_buffer_properties()
+    buffer_theming()
   end
 end)
 
---[=[
-local function fontsize()
-  local c = _SCINTILLA.constants
-  local buffer = buffer
-  buffer.zoom = 2 -- e.g. add 2 points to the font size
-  buffer.margin_width_n[0] = 4 + 3 * buffer:text_width(c.STYLE_LINENUMBER, '9')
-end
+events.connect(events.VIEW_NEW, bookmark_theming)
 
-events.connect(events.BUFFER_AFTER_SWITCH, fontsize)
-events.connect(events.VIEW_AFTER_SWITCH, fontsize)
-]=]
+
+return M

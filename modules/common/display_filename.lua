@@ -56,29 +56,29 @@ end
 -- Disconnect events that use `set_title` from `core/gui.lua`
 -- and reconnect with new `set_title` function
 local events = _G.events
-events.disconnect('save_point_reached', 1)
-events.connect('save_point_reached',
+events.disconnect(events.SAVE_POINT_REACHED, 1)
+events.connect(events.SAVE_POINT_REACHED,
   function() -- changes Textadept title to show 'clean' buffer
     buffer.dirty = false
     set_title(buffer)
   end)
 
-events.disconnect('save_point_left', 1)
-events.connect('save_point_left',
+events.disconnect(events.SAVE_POINT_LEFT, 1)
+events.connect(events.SAVE_POINT_LEFT,
   function() -- changes Textadept title to show 'dirty' buffer
     buffer.dirty = true
     set_title(buffer)
   end)
 
-events.disconnect('buffer_after_switch', 3)
-events.connect('buffer_after_switch',
+events.disconnect(events.BUFFER_AFTER_SWITCH, 3)
+events.connect(events.BUFFER_AFTER_SWITCH,
   function() -- updates titlebar and statusbar
     set_title(buffer)
     events.emit('update_ui')
   end)
 
-events.disconnect('view_after_switch', 2)
-events.connect('view_after_switch',
+events.disconnect(events.VIEW_AFTER_SWITCH, 2)
+events.connect(events.VIEW_AFTER_SWITCH,
   function() -- updates titlebar and statusbar
     set_title(buffer)
     events.emit('update_ui')

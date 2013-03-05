@@ -2,22 +2,23 @@
 
 local TA = _M.textadept
 local COM = _M.common
+local VIEW = view
+local BUFFER = buffer
+
 
 TA.keys = require 'textadept.keys'
 
-
-local keys = _G.keys
-local b, v = 'buffer', 'view'
+local keys = keys
 
 
 
 keys.ab         = { COM.display_filename.switch_buffer }
 --keys.ag         = { COM.ctags.goto_symbol }
 
-keys.av         = { 'split', v } -- vertical
-keys.ah         = { 'split', v, false }
+keys.av         = { VIEW.split, VIEW, true } -- vertical
+keys.ah         = { VIEW.split, VIEW, false }
 
-keys.aa         = { 'select_all', b }
+keys.aa         = { BUFFER.select_all, BUFFER }
 
 keys.af         = { gui.find.find_incremental }
 
@@ -37,28 +38,28 @@ keys.aE         = { TA.editing.match_brace, 'select' }
 --keys.caf        = { COM.ack.search_entry }
 
 
-keys.ca         = { 'vc_home', b }
-keys.ce         = { 'line_end', b }
+keys.ca         = { BUFFER.vc_home, BUFFER }
+keys.ce         = { BUFFER.line_end, BUFFER }
 
 keys.cb         = { COM.lastbuffer.last_buffer }
 
 keys.ck         = {
       function()
-        buffer:line_end_extend()
-        buffer:clear()
+        BUFFER:line_end_extend()
+        BUFFER:clear()
       end
     }
 
-keys.cu         = { 'del_line_left', b }
+keys.cu         = { BUFFER.del_line_left, BUFFER }
 
 
 
 keys['esc']   = {
-  ['\b']        = { 'del_word_left', b },
-  d             = { 'del_word_right', b },
+  ['\b']        = { BUFFER.del_word_left, BUFFER },
+  d             = { BUFFER.del_word_right, BUFFER },
 
-  b             = { 'word_left', b },
-  f             = { 'word_right', b },
+  b             = { BUFFER.word_left, BUFFER },
+  f             = { BUFFER.word_right, BUFFER },
 
   g             = { TA.bookmarks.goto_bookmark },
 
@@ -69,7 +70,7 @@ keys['esc']   = {
 
   x             = { gui.command_entry.focus },
 
-  w             = { function() view:unsplit() return true end  },
+  w             = { function() VIEW:unsplit() return true end  },
 
   ['#']         = { TA.editing.block_comment },
 

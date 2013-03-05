@@ -8,10 +8,11 @@ COM.display_filename = require 'common.display_filename'
 
 COM.lastbuffer = require 'common.lastbuffer'
 
+require 'common.theming'
+
 
 --[=[
 
-require 'common.theming'
 
 require 'common.filename'
 require 'common.multiedit'
