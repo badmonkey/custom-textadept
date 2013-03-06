@@ -1,6 +1,11 @@
 
 local M = {}
 
+local constants = _SCINTILLA.constants
+local TA = _M.textadept
+local MARK = TA.bookmarks
+  
+
 
 -- See also the themes'
 -- [buffer.lua](http://code.google.com/p/textadept/source/browse/themes/light/buffer.lua)
@@ -10,8 +15,6 @@ local M = {}
 
 function buffer_theming()
   local buffer = buffer
-  local c = _SCINTILLA.constants
-  local TA = _M.textadept
 
 --[=[
   buffer.view_ws = 0
@@ -22,21 +25,30 @@ function buffer_theming()
   buffer.multiple_selection = true
   buffer.additional_selection_typing = true
   buffer.additional_carets_visible = true
+  buffer.zoom = 2 -- e.g. add 2 points to the font size
 ]=]
   
-  --buffer.zoom = 2 -- e.g. add 2 points to the font size
   
   -- Set number margin for files with more than 999 lines
   local width = #(buffer.line_count..'')
   width = width > 3 and width or 3
-  buffer.margin_width_n[0] = 4 + width * buffer:text_width(c.STYLE_LINENUMBER, '9')
+  buffer.margin_width_n[0] = 4 + width * buffer:text_width(constants.STYLE_LINENUMBER, '9')
 end
 
 
+
+local NCURSES_MARK = constants.SC_MARK_CHARACTER + string.byte(' ')
+
 function bookmark_theming()
-  --buffer:marker_define(TA.bookmarks.MARK_BOOKMARK, _SCINTILLA.constants.SC_MARK_ROUNDRECT)
-  --buffer:marker_set_fore(_M.textadept.bookmarks.MARK_BOOKMARK, colour_parse(blue))
-  --buffer.margin_width_n[1] = 16
+  if NCURSES then
+    buffer:marker_define(MARK.MARK_BOOKMARK, NCURSES_MARK)
+    buffer.marker_back[MARK_BOOKMARK] = M.MARK_BOOKMARK_COLOR
+  else
+    buffer:marker_define(MARK.MARK_BOOKMARK, constants.SC_MARK_ROUNDRECT)
+    buffer.margin_width_n[1] = 16   -- buffer:text_width(constants.STYLE_LINENUMBER, '9')
+     
+  end
+  
 end
 
 
@@ -57,7 +69,8 @@ events.connect(events.RESET_AFTER, function()
   end
 end)
 
-events.connect(events.VIEW_NEW, bookmark_theming)
+events.disconnect(events.VIEW_NEW, MARK.EVENT_ID)
+MARK.EVENT_ID = events.connect(events.VIEW_NEW, bookmark_theming)
 
 
 return M

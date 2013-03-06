@@ -42,11 +42,21 @@ local COM = require 'common'
 
 
 COM.project.DIRS = {
-    _HOME, '/opt/projects', '/opt/textadept_6.2.x86_64'
+    '/home/faganm/projects',
+    '/opt/projects',
+    '/opt/textadept_6.2.x86_64'
   }
 
 
 require 'textadept.complete'
+
+
+--[=[
+gui.dialog('ok-msgbox',
+	    '--text', 'theming callback',
+	    '--informative‑text', 'more informative text',
+	    '--button1', _L['_OK'])
+]=]
 
   
   
