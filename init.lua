@@ -44,7 +44,8 @@ local COM = require 'common'
 COM.project.DIRS = {
     '/home/faganm/projects',
     '/opt/projects',
-    '/opt/textadept_6.2.x86_64'
+    '/opt/textadept',
+    _USERHOME
   }
 
 

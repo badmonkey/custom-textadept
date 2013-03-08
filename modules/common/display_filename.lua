@@ -18,7 +18,7 @@
 local M = {}
 local _L = _L
 
-local PROJ = require 'common.project'
+local PROJ = _M.common.project   -- require 'common.project'
 
 
 
@@ -36,19 +36,14 @@ end
 
 
 function M.lookup_name(buffer)
-  local filename = buffer.filename or buffer._type or _L['[Untitled]']
+  local filename = buffer.filename or buffer._type or _L['Untitled']
   local root = PROJ.root(filename)
 
-  gui.dialog('ok-msgbox',
-	    '--text', filename..' => '..root,
-	    '--informative‑text', 'more informative text',
-	    '--button1', _L['_OK'])
-  
   if root ~= filename:match('(.+)[/\\]') then
     filename = filename:gsub("^"..root, root:match('[^/\\]+$'):upper() )
   end
   
-  return filename:gsub(pattern, replacement), filename:match('[^/\\]+$')
+  return filename:gsub(pattern, replacement), filename:match('[^/\\]+$'), root
 end
 
 
@@ -108,22 +103,25 @@ function M.switch_buffer()
   local items = {}
   for _, buffer in ipairs(_BUFFERS) do
     local dirty = buffer.dirty and '*' or ''
-    local filename, shortname = M.lookup_name(buffer)
+    local filename, shortname, root = M.lookup_name(buffer)
     
     items[#items + 1] = dirty..shortname
     items[#items + 1] = filename
+    items[#items + 1] = root
   end
   local response = gui.dialog('filteredlist',
-                              '--title', _L['[Switch Buffers]'],
+                              '--title', _L['Switch Buffers'],
                               '--button1', 'gtk-ok',
                               '--height', 900,
                               '--button2', 'gtk-cancel',
                               '--no-newline',
-                              '--columns', 'Name', 'File',
+                              '--columns', 'Name', 'File', 'Root',
                               '--items', items)
   local ok, i = response:match('(%-?%d+)\n(%d+)$')
   if ok == '1' then view:goto_buffer(tonumber(i) + 1, true) end
 end
+
+gui.switch_buffer = M.switch_buffer
 
 
 return M

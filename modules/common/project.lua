@@ -32,16 +32,17 @@ M.DIRS = { _HOME, _USERHOME..'/modules' }
 function M.root(filename)
   local filename = filename or buffer.filename
   local project_root
-  
+
   if filename then
     for i=1, #M.DIRS do
-      project_root = filename:match('('..M.DIRS[i]..'[/\\][^/\\]+)[/\\].+')
+      project_root = filename:match('^('..M.DIRS[i]..')[/\\].+')
+
       if project_root then
         break
       end
     end
   end
-
+	
   return project_root or filename:match('(.+)[/\\]') or ' '
 end
 
