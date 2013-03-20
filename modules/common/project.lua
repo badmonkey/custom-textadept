@@ -43,7 +43,7 @@ function M.root(filename)
     end
   end
 	
-  return project_root or filename:match('(.+)[/\\]') or ' '
+  return project_root or filename:match('(.+)[/\\]') or '', project_root and true
 end
 
 return M

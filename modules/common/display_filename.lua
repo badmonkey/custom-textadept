@@ -26,24 +26,23 @@ local PROJ = _M.common.project   -- require 'common.project'
 
 -- Read environment variable.
 if WIN32 then
-  pattern = os.getenv('USERPROFILE')..'\\'
-  replacement = ''
+  HOMEPAT = os.getenv('USERPROFILE')..'\\'
+  HOMESUB = ''
 else
-  pattern = '^'..os.getenv('HOME')
-  --replacement = '~'
-  replacement = 'HOME'
+  HOMEPAT = '^'..os.getenv('HOME')
+  HOMESUB = 'HOME'
 end
 
 
 function M.lookup_name(buffer)
   local filename = buffer.filename or buffer._type or _L['Untitled']
-  local root = PROJ.root(filename)
+  local root, realproj = PROJ.root(filename)
 
-  if root ~= filename:match('(.+)[/\\]') then
+  if realproj then
     filename = filename:gsub("^"..root, root:match('[^/\\]+$'):upper() )
   end
   
-  return filename:gsub(pattern, replacement), filename:match('[^/\\]+$'), root
+  return filename:gsub(HOMEPAT, HOMESUB), filename:match('[^/\\]+$'), root
 end
 
 
@@ -107,15 +106,16 @@ function M.switch_buffer()
     
     items[#items + 1] = dirty..shortname
     items[#items + 1] = filename
-    items[#items + 1] = root
+    --items[#items + 1] = root
   end
   local response = gui.dialog('filteredlist',
                               '--title', _L['Switch Buffers'],
                               '--button1', 'gtk-ok',
                               '--height', 900,
+			      '--width', 450,
                               '--button2', 'gtk-cancel',
                               '--no-newline',
-                              '--columns', 'Name', 'File', 'Root',
+                              '--columns', 'Name', 'File',	-- 'Root',
                               '--items', items)
   local ok, i = response:match('(%-?%d+)\n(%d+)$')
   if ok == '1' then view:goto_buffer(tonumber(i) + 1, true) end

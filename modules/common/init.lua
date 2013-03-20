@@ -10,16 +10,14 @@ COM.lastbuffer = require 'common.lastbuffer'
 
 require 'common.theming'
 
+COM.filename = require 'common.filename'
+COM.ctags = require 'common.ctags'
+COM.ack = require 'common.ack'
+
 
 --[=[
-
-
-require 'common.filename'
 require 'common.multiedit'
-
 require 'common.enclose'
-require 'common.ctags'
-require 'common.ack'
 ]=]
 
 

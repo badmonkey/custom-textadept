@@ -13,7 +13,7 @@ local keys = keys
 
 
 keys.ab         = { COM.display_filename.switch_buffer }
---keys.ag         = { COM.ctags.goto_symbol }
+keys.ag         = { COM.ctags.goto_symbol }
 
 keys.av         = { VIEW.split, VIEW, true } -- vertical
 keys.ah         = { VIEW.split, VIEW, false }
@@ -34,8 +34,8 @@ keys.aE         = { TA.editing.match_brace, 'select' }
 
 
 
---keys.cao        = { COM.filename.insert_filename }
---keys.caf        = { COM.ack.search_entry }
+keys.cao        = { COM.filename.insert_filename }
+keys.caf        = { COM.ack.search_entry }
 
 
 keys.ca         = { BUFFER.vc_home, BUFFER }

@@ -6,11 +6,12 @@
 -- repository away, Lua search is the default on Windows.<br>
 -- Using `Alt/⌘`+`L` and`Alt/⌘`+`A` you can toggle between the two search
 -- modes.
-module('_m.common.ack', package.seeall)
+
+local M = {}
 
 -- To start a search in the project's root directory we use the
 -- [common.project](project.html) module.
-require 'common.project'
+local PROJ = _M.common.project   -- require 'common.project'
 
 -- ### Fields
 
@@ -21,8 +22,9 @@ require 'common.project'
 OPTIONS = '--nocolor --nogroup '
 
 -- ## Setup
-local L = _G.locale.localize
-local buffer_type = L('[Files Found Buffer]')
+local _L = _L
+local buffer_type = _L['[Files Found Buffer]']
+
 
 -- ## Functions
 
@@ -31,9 +33,9 @@ local buffer_type = L('[Files Found Buffer]')
 events.connect('command_entry_command',
   function(text)
     if ack_search then
-      local search_dir = _m.common.project.root()
+      local search_dir = PROJ.root()
       gui.command_entry.focus()
-      local command = 'ack '..OPTIONS..text
+      local command = 'ack-grep '..OPTIONS..text
       local p = io.popen(command..' '..search_dir..' 2>&1')
       local out = p:read('*all')
       p:close()
@@ -44,7 +46,7 @@ events.connect('command_entry_command',
       return true
     end
     if textadept_find_in_files then
-      local search_dir = _m.common.project.root()
+      local search_dir = PROJ.root()
       gui.command_entry.focus()
       gui.find.find_entry_text = text
       gui.find.find_in_files(search_dir)
@@ -67,17 +69,18 @@ events.connect('command_entry_keypress',
       elseif alt and string.char(code) == 'l' then
         ack_search = nil
         textadept_find_in_files = true
-        gui.statusbar_text = "Lua find in files: ".._m.common.project.root()
+        gui.statusbar_text = "Lua find in files: "..PROJ.root()
       elseif alt and string.char(code) == 'a' then
         ack_search = true
         textadept_find_in_files = false
-        gui.statusbar_text = "ack: ".._m.common.project.root()
+        gui.statusbar_text = "ack: "..PROJ.root()
       end
     end
   end, 1)
 
+  
 -- Open command entry to enter search term.
-function search_entry()
+function M.search_entry()
   if buffer.filename then
     if WIN32 then
       textadept_find_in_files = true
@@ -88,3 +91,6 @@ function search_entry()
     gui.command_entry.focus()
   end
 end
+
+
+return M
