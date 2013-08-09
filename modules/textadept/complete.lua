@@ -14,6 +14,7 @@ local keys = keys
 
 keys.ab         = { COM.display_filename.switch_buffer }
 keys.ag         = { COM.ctags.goto_symbol }
+keys.aG         = { COM.ctags.find_project_symbol }
 
 keys.av         = { VIEW.split, VIEW, true } -- vertical
 keys.ah         = { VIEW.split, VIEW, false }
@@ -25,9 +26,6 @@ keys.af         = { gui.find.find_incremental }
 keys['a ']      = { TA.bookmarks.toggle }
 keys.an         = { TA.bookmarks.goto_next }
 keys.ap         = { TA.bookmarks.goto_prev }
-
-keys['a+']      = { expand_fold }
-keys['a-']      = { collapse_fold }
 
 keys.ae         = { TA.editing.match_brace }
 keys.aE         = { TA.editing.match_brace, 'select' }
@@ -65,14 +63,14 @@ keys['esc']   = {
 
   r             = { gui.find.replace },
 
-  n             = { gui.goto_view, 1, false },
-  p             = { gui.goto_view, -1, false },
+  n             = { gui.goto_view, 1, true },
+  p             = { gui.goto_view, -1, true },
 
   x             = { gui.command_entry.focus },
 
   w             = { function() VIEW:unsplit() return true end  },
 
-  ['#']         = { TA.editing.block_comment },
+  ['/']         = { TA.editing.block_comment },
 
 
 } -- keys(esc)

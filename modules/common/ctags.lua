@@ -20,6 +20,8 @@
 
 local M = {}
 
+local PROJ = _M.common.project   -- require 'common.project'
+
 -- ## Fields
 
 -- Path and options for the ctags utility can be defined in the `CTAGCMD`
@@ -34,6 +36,7 @@ end
 
 -- Goes to the selected symbol in a filtered list dialog.
 -- Requires [ctags]((http://ctags.sourceforge.net/)) to be installed.
+
 function M.goto_symbol()
   local buffer = buffer
   if not buffer.filename then return end
@@ -60,6 +63,39 @@ function M.goto_symbol()
                                 '--items', symbols)
     local ok, line = response:match('(%S+)\n(%d+)$')
     if ok == 'gtk-ok' then buffer:goto_line(tonumber(line) - 1) end
+  end
+  p:close()
+end
+
+
+function M.find_project_symbol()
+  local buffer = buffer
+  local symbols = {}
+  local p = io.popen(M.CTAGCMD..' --excmd=number --recurse -f - "'..PROJ.root()..'"')
+  for line in p:read('*all'):gmatch('[^\r\n]+') do
+    local name, filepath, line, ext = line:match('^(%S+)\t([^\t]+)\t([^;]+);"\t(.+)$')
+    if name and line and ext then
+      symbols[#symbols + 1] = name
+      symbols[#symbols + 1] = ext
+      symbols[#symbols + 1] = line
+      symbols[#symbols + 1] = filepath
+    end
+  end
+  if #symbols > 0 then
+    local response = gui.dialog('filteredlist',
+                                '--title', 'Goto Symbol',
+                                '--button1', 'gtk-ok',
+                                '--button2', 'gtk-cancel',
+                                '--height', 900,
+                                '--string-output',
+                                '--no-newline',
+                                '--columns', 'Name', 'Type', 'Line', 'File',
+                                '--output-column', '4',
+                                '--items', symbols)
+    local ok, line = response:match('(%S+)\n(%d+)\n(%S+)$')
+    if ok == 'gtk-ok' then
+      buffer:goto_line(tonumber(line) - 1)
+    end
   end
   p:close()
 end

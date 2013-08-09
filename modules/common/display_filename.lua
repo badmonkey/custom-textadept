@@ -32,17 +32,11 @@ else
   HOMEPAT = '^'..os.getenv('HOME')
   HOMESUB = 'HOME'
 end
-
+  
 
 function M.lookup_name(buffer)
   local filename = buffer.filename or buffer._type or _L['Untitled']
-  local root, realproj = PROJ.root(filename)
-
-  if realproj then
-    filename = filename:gsub("^"..root, root:match('[^/\\]+$'):upper() )
-  end
-  
-  return filename:gsub(HOMEPAT, HOMESUB), filename:match('[^/\\]+$'), root
+  return PROJ.get_name(filename)
 end
 
 

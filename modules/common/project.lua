@@ -46,4 +46,16 @@ function M.root(filename)
   return project_root or filename:match('(.+)[/\\]') or '', project_root and true
 end
 
+
+function M.get_name(filename)
+  local root, realproj = M.root(filename)
+
+  if realproj then
+    filename = filename:gsub("^"..root, root:match('[^/\\]+$'):upper() )
+  end
+  
+  return filename:gsub(HOMEPAT, HOMESUB), filename:match('[^/\\]+$'), root
+end
+
+
 return M
