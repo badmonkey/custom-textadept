@@ -32,7 +32,7 @@ else
   HOMEPAT = '^'..os.getenv('HOME')
   HOMESUB = 'HOME'
 end
-  
+
 
 function M.lookup_name(buffer)
   local filename = buffer.filename or buffer._type or _L['Untitled']
@@ -48,11 +48,11 @@ end
 local function set_title(buffer)
   local buffer = buffer
   local dirty = buffer.dirty and '*' or ' '
-  
+
   local filename = M.lookup_name(buffer)
 
   gui.title = string.format('Textadept -- %s%s', filename, dirty )
-  
+
 end
 
 
@@ -88,7 +88,7 @@ events.connect(events.VIEW_AFTER_SWITCH,
     events.emit('update_ui')
   end, 2)
 
-  
+
 
 -- Displays a dialog with a list of buffers to switch to and switches to the
 -- selected one, if any.
@@ -97,7 +97,7 @@ function M.switch_buffer()
   for _, buffer in ipairs(_BUFFERS) do
     local dirty = buffer.dirty and '*' or ''
     local filename, shortname, root = M.lookup_name(buffer)
-    
+
     items[#items + 1] = dirty..shortname
     items[#items + 1] = filename
     --items[#items + 1] = root
@@ -106,13 +106,13 @@ function M.switch_buffer()
                               '--title', _L['Switch Buffers'],
                               '--button1', 'gtk-ok',
                               '--height', 900,
-			      '--width', 450,
+                              '--width', 450,
                               '--button2', 'gtk-cancel',
                               '--no-newline',
                               '--columns', 'Name', 'File',	-- 'Root',
                               '--items', items)
   local ok, i = response:match('(%-?%d+)\n(%d+)$')
-  if ok == '1' then view:goto_buffer(tonumber(i) + 1, true) end
+  if ok == '1' then view:goto_buffer(tonumber(i) + 1, false) end
 end
 
 gui.switch_buffer = M.switch_buffer
