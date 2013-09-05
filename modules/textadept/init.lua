@@ -12,12 +12,13 @@ TA.editing = require 'textadept.editing'
 
 require 'textadept.find'
 
-TA.filter_through = require 'textadept.filter_through'
-TA.mime_types = require 'textadept.mime_types'
+TA.file_types = require 'textadept.file_types'
 TA.run = require 'textadept.run'
 TA.session = require 'textadept.session'
-TA.snapopen = require 'textadept.snapopen'
 TA.snippets = require 'textadept.snippets'
+
+
+-- keys and menu are handled in complete.lua
 
 
 return TA

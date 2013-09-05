@@ -8,8 +8,6 @@ COM.display_filename = require 'common.display_filename'
 
 COM.lastbuffer = require 'common.lastbuffer'
 
-require 'common.theming'
-
 COM.filename = require 'common.filename'
 COM.ctags = require 'common.ctags'
 COM.ack = require 'common.ack'
