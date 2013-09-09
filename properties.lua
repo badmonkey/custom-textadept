@@ -129,5 +129,8 @@ buffer.automatic_fold = c.SC_AUTOMATICFOLD_SHOW + c.SC_AUTOMATICFOLD_CLICK +
     buffer.margin_width_n[1] = 16   -- buffer:text_width(constants.STYLE_LINENUMBER, '9')
      
   end
+
+
+BOOKMARK_COLOR
 ]=]
 
