@@ -72,6 +72,8 @@ keys['esc']   = {
 
   ['/']         = { TA.editing.block_comment },
 
+  i             = { COM.indent.indent_buffer },
+  [' ']         = { COM.complete.complete_buffer },
 
 } -- keys(esc)
 

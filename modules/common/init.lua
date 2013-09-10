@@ -12,6 +12,9 @@ COM.filename = require 'common.filename'
 COM.ctags = require 'common.ctags'
 COM.ack = require 'common.ack'
 
+COM.indent = require 'common.indent'
+COM.complete = require 'common.complete'
+
 
 --[=[
 require 'common.multiedit'

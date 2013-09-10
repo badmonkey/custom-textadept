@@ -49,7 +49,7 @@ COM.project.DIRS = {
   }
 
 
-require 'textadept.complete'
+require 'textadept.keybindings'
 
 
 --[=[

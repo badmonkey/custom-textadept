@@ -1,4 +1,9 @@
-function indent_cpp()
+
+
+local M = {}
+
+
+function M.indent_buffer()
   -- written by JB Mouret -- mouret@isir.upmc.fr
   local buffer = buffer
   -- unindent the current line (to make empty lines empty)
@@ -11,8 +16,8 @@ function indent_cpp()
   local empty_line = (line_length == 1)
   if (empty_line) then buffer.add_text(';') end
   local input = buffer:get_text()
-  local tmpfile = _USERHOME..'/.ft'
-  local conf = _USERHOME..'/crust.cfg'
+  local tmpfile = _USERHOME..'/.tmp.uncrustify'
+  local conf = _USERHOME..'/uncrustify.cfg'
   local f = io.open(tmpfile, 'wb')
   f:write(input)
   f:close()
@@ -29,10 +34,7 @@ function indent_cpp()
   end
   os.remove(tmpfile)
 end
-To bind this function to "tab" (as emacs does it):
-
-_G.keys.cpp['\t'] = indent_cpp
 
 
--- ESC i
+return M
 -- filter_through(cmd)

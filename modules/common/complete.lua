@@ -1,4 +1,9 @@
-function complete_cpp()
+
+
+local M = {}
+
+
+function M.complete_buffer()
   -- written by JB Mouret -- mouret@isir.upmc.fr
   local buffer = buffer
   -- configure here your path to clang
@@ -26,7 +31,6 @@ function complete_cpp()
   end
   buffer.auto_c_show(buffer, 0, s)
 end
-To bind this function to control+i:
 
-_G.keys.cpp.ci = complete_cpp
 
+return M
