@@ -51,7 +51,7 @@ local function set_title(buffer)
 
   local filename = M.lookup_name(buffer)
 
-  gui.title = string.format('Textadept -- %s%s', filename, dirty )
+  ui.title = string.format('Textadept -- %s%s', filename, dirty )
 
 end
 
@@ -102,20 +102,20 @@ function M.switch_buffer()
     items[#items + 1] = filename
     --items[#items + 1] = root
   end
-  local response = gui.dialog('filteredlist',
-                              '--title', _L['Switch Buffers'],
-                              '--button1', 'gtk-ok',
-                              '--height', 900,
-                              '--width', 450,
-                              '--button2', 'gtk-cancel',
-                              '--no-newline',
-                              '--columns', 'Name', 'File',	-- 'Root',
-                              '--items', items)
+  local response = ui.dialog('filteredlist',
+                             '--title', _L['Switch Buffers'],
+                             '--button1', 'gtk-ok',
+                             '--height', 900,
+                             '--width', 450,
+                             '--button2', 'gtk-cancel',
+                             '--no-newline',
+                             '--columns', 'Name', 'File',	-- 'Root',
+                             '--items', items)
   local ok, i = response:match('(%-?%d+)\n(%d+)$')
   if ok == '1' then view:goto_buffer(tonumber(i) + 1, false) end
 end
 
-gui.switch_buffer = M.switch_buffer
+ui.switch_buffer = M.switch_buffer
 
 
 return M

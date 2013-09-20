@@ -21,7 +21,7 @@ function M.indent_buffer()
   local f = io.open(tmpfile, 'wb')
   f:write(input)
   f:close()
-  local cmd = table.concat({"uncrustify -q -c ", conf, ' -f "'..tmpfile..'"'}, ' ')
+  local cmd = table.concat({"uncrustify -q -c", conf, "-f", '"'..tmpfile..'"'}, ' ')
   local p = io.popen(cmd)
   local fv2 = buffer.first_visible_line
   buffer:set_text(p:read('*all'))

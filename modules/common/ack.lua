@@ -39,7 +39,7 @@ events.connect('command_entry_command',
       local p = io.popen(command..' '..search_dir..' 2>&1')
       local out = p:read('*all')
       p:close()
-      gui._print(buffer_type, 'ack: '..search_dir..'\n\n'..out)
+      ui._print(buffer_type, 'ack: '..search_dir..'\n\n'..out)
       ack_search = false
       buffer:goto_pos(0)
       buffer.read_only = 1
@@ -47,9 +47,9 @@ events.connect('command_entry_command',
     end
     if textadept_find_in_files then
       local search_dir = PROJ.root()
-      gui.command_entry.focus()
-      gui.find.find_entry_text = text
-      gui.find.find_in_files(search_dir)
+      ui.command_entry.focus()
+      ui.find.find_entry_text = text
+      ui.find.find_in_files(search_dir)
       textadept_find_in_files = false
       return true
     end
@@ -63,17 +63,17 @@ events.connect('command_entry_keypress',
       if K[code] == 'esc' then
         ack_search = nil
         textadept_find_in_files = nil
-        gui.command_entry.focus()
-        gui.statusbar_text = ''
+        ui.command_entry.focus()
+        ui.statusbar_text = ''
         return true
       elseif alt and string.char(code) == 'l' then
         ack_search = nil
         textadept_find_in_files = true
-        gui.statusbar_text = "Lua find in files: "..PROJ.root()
+        ui.statusbar_text = "Lua find in files: "..PROJ.root()
       elseif alt and string.char(code) == 'a' then
         ack_search = true
         textadept_find_in_files = false
-        gui.statusbar_text = "ack: "..PROJ.root()
+        ui.statusbar_text = "ack: "..PROJ.root()
       end
     end
   end, 1)
@@ -87,8 +87,8 @@ function M.search_entry()
     else
       ack_search = true
     end
-    gui.command_entry.entry_text = ''
-    gui.command_entry.focus()
+    ui.command_entry.entry_text = ''
+    ui.command_entry.focus()
   end
 end
 

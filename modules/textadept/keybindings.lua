@@ -21,7 +21,7 @@ keys.ah         = { VIEW.split, VIEW, false }
 
 keys.aa         = { BUFFER.select_all, BUFFER }
 
-keys.af         = { gui.find.find_incremental }
+keys.af         = { ui.find.find_incremental }
 
 keys['a ']      = { TA.bookmarks.toggle }
 keys.an         = { TA.bookmarks.goto_next }
@@ -61,12 +61,12 @@ keys['esc']   = {
 
   g             = { TA.bookmarks.goto_bookmark },
 
-  r             = { gui.find.replace },
+  r             = { ui.find.replace },
 
-  n             = { gui.goto_view, 1, true },
-  p             = { gui.goto_view, -1, true },
+  n             = { ui.goto_view, 1, true },
+  p             = { ui.goto_view, -1, true },
 
-  x             = { gui.command_entry.focus },
+  x             = { ui.command_entry.focus },
 
   w             = { function() VIEW:unsplit() return true end  },
 

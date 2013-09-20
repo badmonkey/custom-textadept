@@ -1,7 +1,7 @@
 custom-textadept
 ================
 
-Custom files for textadept
+Custom files for textadept (currently for version 7.0beta3)
 
 
 

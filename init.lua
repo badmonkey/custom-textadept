@@ -53,7 +53,7 @@ require 'textadept.keybindings'
 
 
 --[=[
-gui.dialog('ok-msgbox',
+ui.dialog('ok-msgbox',
 	    '--text', 'theming callback',
 	    '--informative‑text', 'more informative text',
 	    '--button1', _L['_OK'])

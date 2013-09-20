@@ -81,7 +81,7 @@ function M.goto_bookmark()
     markers[#markers + 1] = tostring(line + 1)..': '..text
     line = buffer:marker_next(line + 1, 2^MARK_BOOKMARK)
   until line < 0
-  local line = gui.filteredlist(_L['Select Bookmark'], _L['Bookmark'], markers)
+  local line = ui.filteredlist(_L['Select Bookmark'], _L['Bookmark'], markers)
   if line then _M.textadept.editing.goto_line(line:match('^%d+')) end
 end
 

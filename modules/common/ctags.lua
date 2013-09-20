@@ -51,16 +51,16 @@ function M.goto_symbol()
     end
   end
   if #symbols > 0 then
-    local response = gui.dialog('filteredlist',
-                                '--title', 'Goto Symbol',
-                                '--button1', 'gtk-ok',
-                                '--button2', 'gtk-cancel',
-                                '--height', 900,
-                                '--string-output',
-                                '--no-newline',
-                                '--columns', 'Name', 'Type', 'Line',
-                                '--output-column', '3',
-                                '--items', symbols)
+    local response = ui.dialog('filteredlist',
+                               '--title', 'Goto Symbol',
+                               '--button1', 'gtk-ok',
+                               '--button2', 'gtk-cancel',
+                               '--height', 900,
+                               '--string-output',
+                               '--no-newline',
+                               '--columns', 'Name', 'Type', 'Line',
+                               '--output-column', '3',
+                               '--items', symbols)
     local ok, line = response:match('(%S+)\n(%d+)$')
     if ok == 'gtk-ok' then buffer:goto_line(tonumber(line) - 1) end
   end
@@ -82,16 +82,16 @@ function M.find_project_symbol()
     end
   end
   if #symbols > 0 then
-    local response = gui.dialog('filteredlist',
-                                '--title', 'Goto Symbol',
-                                '--button1', 'gtk-ok',
-                                '--button2', 'gtk-cancel',
-                                '--height', 900,
-                                '--string-output',
-                                '--no-newline',
-                                '--columns', 'Name', 'Type', 'Line', 'File',
-                                '--output-column', '4',
-                                '--items', symbols)
+    local response = ui.dialog('filteredlist',
+                               '--title', 'Goto Symbol',
+                               '--button1', 'gtk-ok',
+                               '--button2', 'gtk-cancel',
+                               '--height', 900,
+                               '--string-output',
+                               '--no-newline',
+                               '--columns', 'Name', 'Type', 'Line', 'File',
+                               '--output-column', '4',
+                               '--items', symbols)
     local ok, line = response:match('(%S+)\n(%d+)\n(%S+)$')
     if ok == 'gtk-ok' then
       buffer:goto_line(tonumber(line) - 1)
