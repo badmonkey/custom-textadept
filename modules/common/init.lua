@@ -21,5 +21,19 @@ require 'common.multiedit'
 require 'common.enclose'
 ]=]
 
+COM.debug_mode = false
+
+function COM.debugon()
+  ui.print("DEBUG Mode On")
+  COM.debug_mode = true
+end
+
+
+function ui.debug_print(...)
+	if COM.debug_mode then
+		ui.print(...)
+	end
+end
+
 
 return COM

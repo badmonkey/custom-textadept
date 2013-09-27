@@ -42,10 +42,11 @@ local COM = require 'common'
 
 
 COM.project.DIRS = {
-    '/home/faganm/projects',
-    '/opt/projects',
+    '/home/faganm/projects/[^/\\]+',
+    '/opt/projects/[^/\\]+',
     '/opt/textadept',
-    _USERHOME
+    _USERHOME,
+	_HOME,
   }
 
 
@@ -60,4 +61,5 @@ ui.dialog('ok-msgbox',
 ]=]
 
   
+--ui.print("End custom init")
   

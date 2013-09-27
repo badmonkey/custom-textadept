@@ -13,6 +13,16 @@
 
 local M = {}
 
+
+-- Read environment variable.
+if WIN32 then
+  HOMEPAT = os.getenv('USERPROFILE')..'\\'
+  HOMESUB = ''
+else
+  HOMEPAT = '^'..os.getenv('HOME')
+  HOMESUB = 'HOME'
+end
+
 -- ## Fields
 
 -- This `DIRS` field can be overwritten or added to in your `init.lua` after
@@ -22,9 +32,10 @@ local M = {}
 --                                '/home/username/projects' }
 -- The default value contains Textadept's directory and the user's
 -- modules directory.
-M.DIRS = { _HOME, _USERHOME..'/modules' }
+M.DIRS = { _HOME }
 
 -- ## Commands
+
 
 -- Match a file's path with project root directories and try to return the
 -- project root.  If the project root is not found the file's directory
@@ -34,15 +45,16 @@ function M.root(filename)
   local project_root
 
   if filename then
-    for i=1, #M.DIRS do
+    for i = 1, #M.DIRS do
       project_root = filename:match('^('..M.DIRS[i]..')[/\\].+')
-
-      if project_root then
-        break
-      end
+	  
+	  if project_root then
+          break
+	  end
+	  
     end
   end
-	
+
   return project_root or filename:match('(.+)[/\\]') or '', project_root and true
 end
 

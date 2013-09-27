@@ -24,15 +24,6 @@ local PROJ = _M.common.project   -- require 'common.project'
 
 -- ## Fields
 
--- Read environment variable.
-if WIN32 then
-  HOMEPAT = os.getenv('USERPROFILE')..'\\'
-  HOMESUB = ''
-else
-  HOMEPAT = '^'..os.getenv('HOME')
-  HOMESUB = 'HOME'
-end
-
 
 function M.lookup_name(buffer)
   local filename = buffer.filename or buffer._type or _L['Untitled']

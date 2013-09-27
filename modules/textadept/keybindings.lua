@@ -82,6 +82,8 @@ keys['esc']   = {
 
   i             = { COM.indent.indent_buffer },
   [' ']         = { COM.complete.complete_buffer },
+  
+  ['0']         = { COM.debugon },
 
 } -- keys(esc)
 

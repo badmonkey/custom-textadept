@@ -18,7 +18,7 @@ TA.session = require 'textadept.session'
 TA.snippets = require 'textadept.snippets'
 
 
--- keys and menu are handled in complete.lua
+-- keys and menu are handled in keybindings.lua
 
 
 return TA
