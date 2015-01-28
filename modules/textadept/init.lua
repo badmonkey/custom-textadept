@@ -1,24 +1,23 @@
 
-local TA = {}
-_M.textadept = TA
+local M = {}
+textadept = M
 
 
-TA.adeptsense = require 'textadept.adeptsense'
-TA.bookmarks = require 'textadept.bookmarks'
+M.bookmarks = require 'textadept.bookmarks'
 
 require 'textadept.command_entry'
 
-TA.editing = require 'textadept.editing'
+M.editing = require 'textadept.editing'
+M.file_types = require 'textadept.file_types'
 
 require 'textadept.find'
 
-TA.file_types = require 'textadept.file_types'
-TA.run = require 'textadept.run'
-TA.session = require 'textadept.session'
-TA.snippets = require 'textadept.snippets'
+M.run = require 'textadept.run'
+M.session = require 'textadept.session'
+M.snippets = require 'textadept.snippets'
 
+-- These need to be loaded last.
+M.keys = require 'textadept.keys'
+--M.menu = require 'textadept.menu'
 
--- keys and menu are handled in keybindings.lua
-
-
-return TA
+return M
